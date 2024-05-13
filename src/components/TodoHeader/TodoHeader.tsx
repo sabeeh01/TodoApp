@@ -20,12 +20,12 @@ const TodoHeader = () => {
 
   const onAdd = () => {
     try {
-      if (!fieldValues.title || !fieldValues.description)
-        throw new Error("Fields empty!");
+      if (!fieldValues.title) throw new Error("Title is required!");
       dispatch(
         addTodo({
           id: new Date().getMilliseconds(),
-          ...fieldValues,
+          title: fieldValues.title,
+          description: fieldValues.description || "",
           status: "pending",
         })
       );
@@ -33,7 +33,7 @@ const TodoHeader = () => {
         title: "",
         description: "",
       });
-      setError('')
+      setError("");
     } catch (error) {
       setError(error.message);
     }
@@ -56,7 +56,8 @@ const TodoHeader = () => {
       <button onClick={onAdd} className={styles.addButton}>
         Add todo
       </button>
-      {error && <p className={styles.error}>{error}</p>} {/* Render error message if exists */}
+      {error && <p className={styles.error}>{error}</p>}{" "}
+      {/* Render error message if exists */}
     </div>
   );
 };
